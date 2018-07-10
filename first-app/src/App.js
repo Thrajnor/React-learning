@@ -9,7 +9,8 @@ class App extends Component {
       {name:'Natalia', age:18, hobbies:'Keyboarding'},
       {name:'Tomek', age:25},
       {name:'Stefania', age:29},
-    ]
+    ],
+    arePersonsVisible: false,
   }
 
   switchNameHandler = (newName) => {
@@ -63,26 +64,38 @@ class App extends Component {
       }
     }
   } 
+  
+  showPersonsHandler = () => {
+    this.setState({
+      arePersonsVisible: !this.state.arePersonsVisible,
+    })
+  }
 
   render() {
     return (
       <div className="App">
         <h1>hi i'am your app</h1>
-        <button className='btn' onClick={this.switchNameHandler}>click me to change name!</button>
-        <Person name={this.state.persons[0].name} 
-                age={this.state.persons[0].age}> 
-          {this.hobbyStateHandler(0)}</Person>
-        <Person name={this.state.persons[1].name} 
-                age={this.state.persons[1].age}>
-          {this.hobbyStateHandler(1)}</Person>
-        <Person name={this.state.persons[2].name} 
-                age={this.state.persons[2].age} 
-                click={this.switchNameHandler.bind(this, 'Stefanek ?')}> 
-          {this.hobbyStateHandler(2)}</Person>
-        <Person name={this.state.persons[3].name} 
-                age={this.state.persons[3].age}
-                change={this.changeNameHandler}> 
-          {this.hobbyStateHandler(3)}</Person>
+        <button className='btn' onClick={this.showPersonsHandler}>Show Content !</button>
+        {
+          this.state.arePersonsVisible === true ?
+            <div>
+              <Person name={this.state.persons[0].name} 
+                      age={this.state.persons[0].age}> 
+                {this.hobbyStateHandler(0)}</Person>
+              <Person name={this.state.persons[1].name} 
+                      age={this.state.persons[1].age}>
+                {this.hobbyStateHandler(1)}</Person>
+              <Person name={this.state.persons[2].name} 
+                      age={this.state.persons[2].age} 
+                      click={this.switchNameHandler.bind(this, 'Stefanek ?')}> 
+                {this.hobbyStateHandler(2)}</Person>
+              <Person name={this.state.persons[3].name} 
+                      age={this.state.persons[3].age}
+                      change={this.changeNameHandler}> 
+                {this.hobbyStateHandler(3)}</Person>
+            </div>
+          : null 
+        }
       </div>
     );
   }

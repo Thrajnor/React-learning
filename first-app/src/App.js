@@ -70,21 +70,12 @@ class App extends Component {
       arePersonsVisible: !this.state.arePersonsVisible,
     })
   }
-// 
-  // <Person name={this.state.persons[0].name} 
-  // age={this.state.persons[0].age}> 
-// {this.hobbyStateHandler(0)}</Person>
-// <Person name={this.state.persons[1].name} 
-  // age={this.state.persons[1].age}>
-// {this.hobbyStateHandler(1)}</Person>
-// <Person name={this.state.persons[2].name} 
-  // age={this.state.persons[2].age} 
-  // click={this.switchNameHandler.bind(this, 'Stefanek ?')}> 
-// {this.hobbyStateHandler(2)}</Person>
-// <Person name={this.state.persons[3].name} 
-  // age={this.state.persons[3].age}
-  // change={this.changeNameHandler}> 
-// {this.hobbyStateHandler(3)}</Person>
+
+  deletePersonHandler = (personIndex) => {
+    const persons = [...this.state.persons]
+    persons.splice(personIndex, 1)
+    this.setState({persons: persons})
+  }
 
   render() {
     let persons = null
@@ -92,8 +83,8 @@ class App extends Component {
     if(this.state.arePersonsVisible) {
       persons = (
         <div>
-          {this.state.persons.map(person => {
-            return <Person name={person.name} age={person.age}>{person.hobbies}</Person>
+          {this.state.persons.map((person, index) => {
+            return <Person click={() => this.deletePersonHandler(index)} name={person.name} age={person.age}>{person.hobbies}</Person>
           })}
         </div>
       )

@@ -1,0 +1,11 @@
+.person {
+  width: 50%;
+  padding: .3rem;
+  border: .1rem solid $color-grey-dark;
+  margin: auto;
+  box-shadow: .2rem .2rem .9rem rgba(85, 85, 85, 0.849);
+  text-align: center;
+  &:not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
+}

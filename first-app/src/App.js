@@ -5,54 +5,30 @@ import Person from './Person/Person'
 class App extends Component {
   state = {
     persons: [
-      {name:'Marcin', age:21},
-      {name:'Natalia', age:18, hobbies:'Keyboarding'},
-      {name:'Tomek', age:25},
-      {name:'Stefania', age:29},
+      {_id:'d1dw1', name:'Marcin', age:21},
+      {_id:'r12v3r2v3fr', name:'Natalia', age:18, hobbies:'Keyboarding'},
+      {_id:'vr123r', name:'Tomek', age:25},
+      {_id:'123fras', name:'Stefania', age:29},
     ],
     arePersonsVisible: false,
   }
-
-  switchNameHandler = (newName) => {
-    if(typeof newName !== 'string') {
-      newName = 'Stefan'
-    }
-    
-    if(this.state.persons[2].name === 'Tomek') {
-      this.setState({
-        persons: [
-          {name:'Marcin', age:21},
-          {name:'Natalia', age:18, hobbies:'Keyboarding'},
-          {name: newName, age:25},
-          {name:'Stefania', age:29},
-        ]
-      })
-    } else {
-      this.setState({
-        persons: [
-          {name:'Marcin', age:21},
-          {name:'Natalia', age:18, hobbies:'Keyboarding gonciarz and cebula'},
-          {name:'Tomek', age:25},
-          {name:'Stefania', age:29},
-        ]
-      })
-    }
-  }
   
-  changeNameHandler = (event) => {
-
-    this.setState({
-      persons: [
-        {name:'Marcin', age:21},
-        {name:'Natalia', age:18, hobbies:'Keyboarding'},
-        {name:'Tomek', age:25},
-        {name: event.target.value, age:29},
-      ]
+  changeNameHandler = (event, _id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p._id === _id
     })
+
+    const person = {...this.state.persons[personIndex]}
+    person.name = event.target.value
+
+    const persons = [...this.state.persons]
+    persons[personIndex] = person
+
+    this.setState({persons: persons})
   }
 
 
-  hobbyStateHandler = (num) => {
+  hobbyCountHandler = (num) => {
     let hobbies = this.state.persons[num].hobbies
     if (hobbies !== undefined) {
       if (((hobbies.match(/,/g) || []).length) > 0 ||
@@ -84,7 +60,11 @@ class App extends Component {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
-            return <Person click={() => this.deletePersonHandler(index)} name={person.name} age={person.age}>{person.hobbies}</Person>
+            return <Person click={() => this.deletePersonHandler(index)} 
+                           name={person.name} 
+                           age={person.age} 
+                           key={person._id}
+                           change={(event) => this.changeNameHandler(event, person._id)}>{this.hobbyCountHandler(index)}</Person>
           })}
         </div>
       )
